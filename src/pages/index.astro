@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designrr — Your Content Is Already Written. Let Designrr Turn It Into a Book.</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --sky:       #0ea5e9;
+    --sky-light: #38bdf8;
+    --sky-pale:  #e0f2fe;
+    --sky-soft:  #f0f9ff;
+    --sky-mid:   #7dd3fc;
+    --sky-deep:  #0284c7;
+    --white:     #ffffff;
+    --ink:       #0f2133;
+    --ink-mid:   #2d5068;
+    --ink-light: #4b7ea3;
+    --border:    #bae6fd;
+    --heading:   'Bricolage Grotesque', sans-serif;
+    --body:      'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); color: var(--ink); background: var(--white); overflow-x: hidden; }
+
+  /* COUNTDOWN */
+  .countdown-bar {
+    background: var(--sky); padding: .65rem 2rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .countdown-bar p { color: #fff; font-size: .82rem; font-weight: 500; }
+  .countdown-bar p strong { color: var(--sky-pale); }
+  .countdown-units { display: flex; gap: .5rem; align-items: center; }
+  .cdu { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 6px; padding: .25rem .55rem; min-width: 42px; text-align: center; }
+  .cdu-num { font-family: var(--heading); font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1; display: block; }
+  .cdu-label { font-size: .58rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: .05em; }
+  .cdu-sep { color: rgba(255,255,255,0.6); font-weight: 700; font-size: 1rem; }
+  .cd-btn { background: #fff; color: var(--sky-deep); font-family: var(--body); font-size: .82rem; font-weight: 700; padding: .35rem 1rem; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: opacity .2s; }
+  .cd-btn:hover { opacity: .85; }
+
+  /* LIFETIME OFFER */
+  .lifetime-wrap { background: var(--sky-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 2rem; }
+  .lifetime-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .lifetime-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--sky-pale); border: 1px solid var(--border); color: var(--sky-deep); border-radius: 100px; padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1rem; }
+  .lifetime-inner h2 { font-family: var(--heading); font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.5rem); color: var(--ink); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1rem; }
+  .lifetime-inner h2 span { color: var(--sky); }
+  .lifetime-inner p { font-size: .95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; }
+  .lifetime-perks { list-style: none; margin-bottom: 2rem; display: flex; flex-direction: column; gap: .6rem; }
+  .lifetime-perks li { display: flex; align-items: center; gap: .7rem; font-size: .9rem; color: var(--ink-mid); }
+  .perk-check { width: 20px; height: 20px; border-radius: 50%; background: var(--sky-pale); border: 1.5px solid var(--sky); display: flex; align-items: center; justify-content: center; font-size: .7rem; color: var(--sky-deep); flex-shrink: 0; font-weight: 700; }
+  .btn-lifetime { display: inline-block; background: var(--sky); color: #fff; padding: 1rem 2.4rem; border-radius: 10px; font-family: var(--body); font-size: 1rem; font-weight: 700; text-decoration: none; box-shadow: 0 4px 24px rgba(14,165,233,0.35); transition: background .2s, transform .15s, box-shadow .2s; }
+  .btn-lifetime:hover { background: var(--sky-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(14,165,233,0.45); }
+  .lifetime-note { font-size: .78rem; color: var(--ink-light); margin-top: .8rem; }
+  .lifetime-card { background: #fff; border: 1.5px solid var(--border); border-radius: 20px; padding: 2.2rem; text-align: center; box-shadow: 0 8px 40px rgba(14,165,233,0.1); }
+  .lifetime-card .price-label { font-size: .8rem; font-weight: 600; color: var(--ink-light); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem; }
+  .lifetime-card .price-old { font-size: 1rem; color: var(--ink-light); text-decoration: line-through; margin-bottom: .3rem; }
+  .lifetime-card .price-new { font-family: var(--heading); font-size: 3.5rem; font-weight: 800; color: var(--sky); line-height: 1; margin-bottom: .3rem; }
+  .lifetime-card .price-new sup { font-size: 1.5rem; vertical-align: super; }
+  .lifetime-card .price-sub { font-size: .82rem; color: var(--ink-light); margin-bottom: 1.5rem; }
+  .lifetime-card .divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+  .lifetime-card .feature-list { list-style: none; text-align: left; display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
+  .lifetime-card .feature-list li { font-size: .85rem; color: var(--ink-mid); display: flex; align-items: center; gap: .6rem; }
+  .lifetime-card .feature-list li::before { content: '✓'; color: var(--sky); font-weight: 700; flex-shrink: 0; }
+  .lifetime-tag { display: inline-block; background: var(--sky); color: #fff; font-size: .72rem; font-weight: 700; padding: .3rem .8rem; border-radius: 6px; margin-bottom: 1.2rem; letter-spacing: .04em; text-transform: uppercase; }
+  @media (max-width: 768px) { .lifetime-inner { grid-template-columns: 1fr; } }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px;
+  }
+  .nav-logo { font-family: var(--heading); font-size: 1.5rem; font-weight: 800; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--sky); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: .9rem; font-weight: 500; color: var(--ink-light); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--sky); }
+  .nav-cta { background: var(--sky); color: #fff; padding: .55rem 1.4rem; border-radius: 8px; font-family: var(--body); font-size: .9rem; font-weight: 600; text-decoration: none; transition: background .2s, transform .15s; display: inline-block; }
+  .nav-cta:hover { background: var(--sky-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { background: var(--sky-soft); padding: 90px 2rem 80px; text-align: center; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+  .hero-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; opacity: 0.3; filter: blur(70px); }
+  .blob-1 { width: 500px; height: 500px; background: var(--sky-light); top: -200px; left: -150px; }
+  .blob-2 { width: 380px; height: 380px; background: var(--sky-mid); top: -80px; right: -120px; }
+  .blob-3 { width: 320px; height: 320px; background: var(--sky); bottom: -100px; left: 35%; }
+  .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: #fff; border: 1px solid var(--border); color: var(--sky-deep); border-radius: 100px; padding: .35rem 1rem; font-size: .78rem; font-weight: 600; letter-spacing: .04em; margin-bottom: 1.8rem; text-transform: uppercase; }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--sky); border-radius: 50%; display: inline-block; }
+  .hero h1 { font-family: var(--heading); font-weight: 800; font-size: clamp(2.4rem, 5.5vw, 4.2rem); color: var(--ink); line-height: 1.1; max-width: 820px; margin: 0 auto 1.5rem; letter-spacing: -0.02em; }
+  .hero h1 .accent { color: var(--sky); }
+  .hero > p { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--ink-mid); max-width: 540px; margin: 0 auto 2.5rem; font-weight: 400; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .btn-primary { background: var(--sky); color: #fff; padding: .9rem 2.2rem; border-radius: 10px; font-family: var(--body); font-size: 1rem; font-weight: 600; text-decoration: none; transition: background .2s, transform .15s, box-shadow .2s; display: inline-block; box-shadow: 0 4px 24px rgba(14,165,233,0.35); }
+  .btn-primary:hover { background: var(--sky-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(14,165,233,0.45); }
+  .btn-ghost { background: #fff; color: var(--sky-deep); padding: .9rem 2.2rem; border-radius: 10px; border: 1.5px solid var(--sky); font-family: var(--body); font-size: 1rem; font-weight: 500; text-decoration: none; transition: all .2s; display: inline-block; }
+  .btn-ghost:hover { background: var(--sky-pale); }
+  .hero-sub { font-size: .82rem; color: var(--ink-light); margin-bottom: 3rem; }
+
+  /* MOCKUP */
+  .mockup-wrap { max-width: 860px; margin: 0 auto; background: #fff; border: 1.5px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(14,165,233,0.15); position: relative; z-index: 1; }
+  .mockup-bar { background: var(--sky-soft); padding: .7rem 1rem; display: flex; align-items: center; gap: .5rem; border-bottom: 1px solid var(--border); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #ffbd2e; } .dot-g { background: #28c840; }
+  .mockup-body { display: grid; grid-template-columns: 200px 1fr; min-height: 280px; }
+  .mockup-sidebar { background: var(--sky-soft); border-right: 1px solid var(--border); padding: 1.2rem; }
+  .sidebar-label { font-size: .65rem; font-weight: 600; color: var(--ink-light); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .7rem; }
+  .sidebar-item { display: flex; align-items: center; gap: .6rem; padding: .45rem .6rem; border-radius: 7px; font-size: .78rem; color: var(--ink-mid); margin-bottom: .2rem; cursor: pointer; }
+  .sidebar-item.active { background: var(--sky-pale); color: var(--sky-deep); font-weight: 600; }
+  .sidebar-icon { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .sidebar-item.active .sidebar-icon { background: var(--sky); }
+  .sidebar-item:not(.active) .sidebar-icon { background: var(--border); }
+  .mockup-canvas { padding: 1.5rem; background: #fff; }
+  .canvas-header { font-family: var(--heading); font-size: 1.1rem; color: var(--ink); font-weight: 700; margin-bottom: 1.2rem; }
+  .template-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+  .template-card { aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); position: relative; cursor: pointer; transition: border-color .2s; }
+  .template-card:hover { border-color: var(--sky); }
+  .tc-1 { background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); }
+  .tc-2 { background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%); }
+  .tc-3 { background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%); }
+  .tc-label { position: absolute; bottom: .5rem; left: .5rem; right: .5rem; font-size: .62rem; font-weight: 600; color: var(--sky-deep); }
+  .tc-badge { position: absolute; top: .5rem; right: .5rem; background: var(--sky); color: #fff; font-size: .55rem; font-weight: 700; padding: .15rem .4rem; border-radius: 4px; }
+  .ai-pill { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem; background: var(--sky-pale); border: 1px solid var(--border); border-radius: 100px; padding: .35rem .85rem; font-size: .73rem; color: var(--sky-deep); font-weight: 600; }
+
+  /* SOCIAL PROOF */
+  .proof-strip { background: #fff; padding: 2.5rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
+  .proof-strip > p { font-size: .82rem; color: var(--ink-light); font-weight: 500; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: .07em; }
+  .proof-logos { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .proof-logo { font-family: var(--heading); font-size: 1.05rem; font-weight: 700; color: #c5d8e8; letter-spacing: -.02em; }
+  .proof-stats { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .stat { text-align: center; }
+  .stat-num { font-family: var(--heading); font-size: 2.2rem; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: .3rem; }
+  .stat-num span { color: var(--sky); }
+  .stat-label { font-size: .8rem; color: var(--ink-light); }
+
+  /* FEATURES */
+  .section { padding: 90px 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-size: .76rem; font-weight: 700; color: var(--sky); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+  .section-title { font-family: var(--heading); font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.7rem); color: var(--ink); line-height: 1.15; letter-spacing: -.02em; max-width: 580px; margin-bottom: 3rem; }
+  .section-title span { color: var(--sky); }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .feature-card { background: var(--sky-soft); border: 1.5px solid var(--border); border-radius: 16px; padding: 2rem; transition: border-color .2s, transform .2s, box-shadow .2s; }
+  .feature-card:hover { border-color: var(--sky); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(14,165,233,0.1); }
+  .feature-icon { width: 46px; height: 46px; border-radius: 12px; background: #fff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1.2rem; color: var(--sky); }
+  .feature-card h3 { font-family: var(--heading); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
+  .feature-card p { font-size: .88rem; color: var(--ink-mid); line-height: 1.7; }
+
+  /* HOW IT WORKS */
+  .hiw-wrap { background: var(--sky-pale); padding: 90px 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .hiw-inner { max-width: 1100px; margin: 0 auto; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step-card { background: #fff; border: 1.5px solid var(--border); border-radius: 16px; padding: 2rem; transition: box-shadow .2s; }
+  .step-card:hover { box-shadow: 0 8px 30px rgba(14,165,233,0.12); }
+  .step-num { width: 42px; height: 42px; border-radius: 12px; background: var(--sky); color: #fff; font-family: var(--heading); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; }
+  .step-card h3 { font-family: var(--heading); font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: .6rem; }
+  .step-card p { font-size: .88rem; color: var(--ink-mid); line-height: 1.7; }
+
+  /* TESTIMONIALS */
+  .testimonials-wrap { background: #fff; padding: 90px 2rem; border-bottom: 1px solid var(--border); }
+  .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .testi-card { background: var(--sky-soft); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.8rem; transition: border-color .2s; }
+  .testi-card:hover { border-color: var(--sky); }
+  .stars { color: var(--sky); font-size: 1rem; letter-spacing: .05em; margin-bottom: 1rem; }
+  .testi-card blockquote { font-size: .93rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.2rem; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: .8rem; }
+  .testi-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--heading); font-size: .82rem; font-weight: 700; }
+  .av-1 { background: var(--sky-pale); color: var(--sky-deep); }
+  .av-2 { background: var(--sky-mid); color: #fff; }
+  .av-3 { background: var(--sky); color: #fff; }
+  .testi-name { font-weight: 600; font-size: .88rem; color: var(--ink); }
+  .testi-role { font-size: .76rem; color: var(--ink-light); }
+
+  /* CTA BANNER */
+  .cta-banner { background: var(--sky); padding: 90px 2rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.05) 40px, rgba(255,255,255,0.05) 41px); }
+  .cta-banner h2 { font-family: var(--heading); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); color: #fff; line-height: 1.1; letter-spacing: -.02em; max-width: 680px; margin: 0 auto 1.2rem; position: relative; }
+  .cta-banner > p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 2.5rem; position: relative; }
+  .btn-white { background: #fff; color: var(--sky-deep); padding: .95rem 2.5rem; border-radius: 10px; font-family: var(--body); font-size: 1.05rem; font-weight: 700; text-decoration: none; transition: all .2s; display: inline-block; position: relative; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  .cta-fine { font-size: .8rem; color: rgba(255,255,255,0.7); margin-top: 1.2rem; position: relative; }
+
+  /* FOOTER */
+  footer { background: var(--sky-soft); border-top: 1px solid var(--border); padding: 2.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: var(--heading); font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+  .footer-logo span { color: var(--sky); }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { font-size: .85rem; color: var(--ink-light); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--sky); }
+  .footer-copy { font-size: .76rem; color: var(--ink-light); width: 100%; text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-badge  { animation: fadeUp .5s ease both; }
+  .hero h1     { animation: fadeUp .55s .1s ease both; }
+  .hero > p    { animation: fadeUp .55s .18s ease both; }
+  .hero-btns   { animation: fadeUp .55s .25s ease both; }
+  .hero-sub    { animation: fadeUp .55s .3s ease both; }
+  .mockup-wrap { animation: fadeUp .7s .38s ease both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mockup-body { grid-template-columns: 1fr; }
+    .mockup-sidebar { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .proof-stats { gap: 2rem; }
+    .proof-logos { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COUNTDOWN BAR -->
+<div class="countdown-bar">
+  <p><strong>⚡ Special Offer Ends Soon:</strong> Grab Designrr at a discounted price before the timer hits zero</p>
+  <div class="countdown-units">
+    <div class="cdu"><span class="cdu-num" id="cd-hours">23</span><span class="cdu-label">hrs</span></div>
+    <span class="cdu-sep">:</span>
+    <div class="cdu"><span class="cdu-num" id="cd-mins">59</span><span class="cdu-label">min</span></div>
+    <span class="cdu-sep">:</span>
+    <div class="cdu"><span class="cdu-num" id="cd-secs">59</span><span class="cdu-label">sec</span></div>
+  </div>
+  <a href="https://halum--page1.thrivecart.com/designrr-special-offer1/" class="cd-btn" target="_blank" rel="noopener">Grab the Deal →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Design<span>rr</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="https://halum--page1.thrivecart.com/designrr-special-offer1/" class="nav-cta">Try Free →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span> AI-Powered Publishing Platform</div>
+  <h1>Your eBook, Done for You. <span class="accent">No Design. No Stress. No Excuses.</span></h1>
+  <p>Transform your blog posts, docs, and podcasts into stunning, interactive eBooks with AI. No design skills needed — just your ideas.</p>
+  <div class="hero-btns">
+    <a href="https://halum--page1.thrivecart.com/designrr-special-offer1/" class="btn-primary">Build Your First eBook Free →</a>
+    <a href="#how-it-works" class="btn-ghost">See how it works</a>
+  </div>
+  <p class="hero-sub">No credit card required &nbsp;·&nbsp; Free forever plan available</p>
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+    </div>
+    <div class="mockup-body">
+      <div class="mockup-sidebar">
+        <div class="sidebar-label">My Projects</div>
+        <div class="sidebar-item active"><div class="sidebar-icon"></div> New eBook</div>
+        <div class="sidebar-item"><div class="sidebar-icon"></div> Lead Magnets</div>
+        <div class="sidebar-item"><div class="sidebar-icon"></div> Flipbooks</div>
+        <div class="sidebar-item"><div class="sidebar-icon"></div> Reports</div>
+        <div style="margin-top:1.2rem">
+          <div class="sidebar-label">Templates</div>
+          <div class="sidebar-item"><div class="sidebar-icon"></div> Business</div>
+          <div class="sidebar-item"><div class="sidebar-icon"></div> Education</div>
+          <div class="sidebar-item"><div class="sidebar-icon"></div> Marketing</div>
+        </div>
+        <div class="ai-pill">✦ AI Writer Active</div>
+      </div>
+      <div class="mockup-canvas">
+        <div class="canvas-header">Choose a Template</div>
+        <div class="template-grid">
+          <div class="template-card tc-1"><div class="tc-badge">Popular</div><div class="tc-label">Business Guide</div></div>
+          <div class="template-card tc-2"><div class="tc-label">Lead Magnet</div></div>
+          <div class="template-card tc-3"><div class="tc-label">How-To Report</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-strip">
+  <p>Trusted by creators &amp; marketers worldwide</p>
+  <div class="proof-logos">
+    <span class="proof-logo">Forbes</span>
+    <span class="proof-logo">Entrepreneur</span>
+    <span class="proof-logo">HubSpot</span>
+    <span class="proof-logo">Canva</span>
+    <span class="proof-logo">Shopify</span>
+  </div>
+  <div class="proof-stats">
+    <div class="stat"><div class="stat-num">2M<span>+</span></div><div class="stat-label">eBooks Created</div></div>
+    <div class="stat"><div class="stat-num">150<span>k+</span></div><div class="stat-label">Active Users</div></div>
+    <div class="stat"><div class="stat-num">4.8<span>★</span></div><div class="stat-label">Average Rating</div></div>
+    <div class="stat"><div class="stat-num">85<span>%</span></div><div class="stat-label">Faster Than Manual Design</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section">
+    <div class="section-tag">Everything you need</div>
+    <div class="section-title">One platform to publish <span>anything.</span></div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">✦</div><h3>AI-Powered Writing Assistant</h3><p>Generate chapters, rewrite sections, and polish your prose with a built-in AI writer trained for digital publishing.</p></div>
+      <div class="feature-card"><div class="feature-icon">⚡</div><h3>1-Click Content Import</h3><p>Turn blog posts, Word docs, PDFs, or podcast transcripts into fully formatted eBooks in one click.</p></div>
+      <div class="feature-card"><div class="feature-icon">◈</div><h3>500+ Designer Templates</h3><p>Choose from a library of professionally designed templates for every niche — fully customizable, always stunning.</p></div>
+      <div class="feature-card"><div class="feature-icon">▲</div><h3>Interactive Flipbooks</h3><p>Publish as animated, page-turning flipbooks that work on any device and skyrocket reader engagement.</p></div>
+      <div class="feature-card"><div class="feature-icon">◎</div><h3>Lead Capture Built In</h3><p>Add opt-in forms, CTAs, and gated content directly inside your eBook — turn readers into subscribers automatically.</p></div>
+      <div class="feature-card"><div class="feature-icon">✿</div><h3>One-Click Publishing</h3><p>Export to PDF, ePub, Kindle, or publish as a live flipbook with your own custom domain and branding.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="hiw-wrap">
+  <div class="hiw-inner">
+    <div class="section-tag">Simple process</div>
+    <div class="section-title">From rough draft to published eBook in 3 steps.</div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><h3>Paste or Import Your Content</h3><p>Drop in a blog URL, Word doc, PDF, or just paste raw text. Designrr handles the formatting automatically.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Design with AI &amp; Templates</h3><p>Pick a template, let AI refine your copy, adjust fonts and colors to match your brand — no design skills required.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Publish &amp; Grow Your Audience</h3><p>Export as PDF or launch a live flipbook. Embed lead capture forms to turn your content into a list-building machine.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="testimonials-wrap">
+  <div class="testimonials-inner">
+    <div class="section-tag">Real results</div>
+    <div class="section-title">People are obsessed with Designrr.</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I repurposed 3 years of blog posts into a 60-page eBook in under 2 hours. What used to take weeks of design work is now a morning task."</blockquote>
+        <div class="testi-author"><div class="testi-avatar av-1">SK</div><div><div class="testi-name">Sarah K.</div><div class="testi-role">Content Marketing Strategist</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The AI writer is legitimately impressive. It cleaned up my rough draft and made it sound 10x more professional. My lead magnet conversions went up 40%."</blockquote>
+        <div class="testi-author"><div class="testi-avatar av-2">MR</div><div><div class="testi-name">Marcus R.</div><div class="testi-role">Online Course Creator</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Finally a tool that doesn't require a graphic designer. I publish eBooks every month as lead magnets and it's completely transformed my email list growth."</blockquote>
+        <div class="testi-author"><div class="testi-avatar av-3">JL</div><div><div class="testi-name">Jade L.</div><div class="testi-role">Business Coach &amp; Speaker</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFETIME OFFER -->
+<section class="lifetime-wrap">
+  <div class="lifetime-inner">
+    <div>
+      <div class="lifetime-badge">🔒 One-Time Payment</div>
+      <h2>Own Designrr <span>Forever</span> — No Monthly Fees. Ever.</h2>
+      <p>Skip the subscription treadmill. Pay once and get full lifetime access to Designrr — including all future updates. It's the smartest deal for serious content creators.</p>
+      <ul class="lifetime-perks">
+        <li><div class="perk-check">✓</div> Unlimited eBook & flipbook creation</li>
+        <li><div class="perk-check">✓</div> All 500+ premium templates included</li>
+        <li><div class="perk-check">✓</div> AI writing assistant — no extra cost</li>
+        <li><div class="perk-check">✓</div> All future updates at no charge</li>
+        <li><div class="perk-check">✓</div> Export to PDF, ePub & Kindle</li>
+      </ul>
+      <a href="https://halum--page1.thrivecart.com/designrr-lifetime2/" class="btn-lifetime" target="_blank" rel="noopener">Get Lifetime Access Now →</a>
+      <p class="lifetime-note">⚡ One-time payment · No recurring charges · Instant access</p>
+    </div>
+    <div class="lifetime-card">
+      <div class="lifetime-tag">Best Value</div>
+      <div class="price-label">Lifetime Deal</div>
+      <div class="price-old">$588/year</div>
+      <div class="price-new"><sup>$</sup>97</div>
+      <div class="price-sub">one-time payment, forever</div>
+      <hr class="divider">
+      <ul class="feature-list">
+        <li>Unlimited eBooks & flipbooks</li>
+        <li>500+ designer templates</li>
+        <li>AI-powered writing assistant</li>
+        <li>1-click blog & PDF import</li>
+        <li>Lead capture & opt-in forms</li>
+        <li>PDF, ePub & Kindle export</li>
+        <li>All future updates included</li>
+      </ul>
+      <a href="https://halum--page1.thrivecart.com/designrr-lifetime2/" class="btn-lifetime" style="width:100%;text-align:center;display:block;" target="_blank" rel="noopener">Claim Lifetime Access →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Your ideas deserve a better first impression.</h2>
+  <p>Join 150,000+ creators already publishing with Designrr.</p>
+  <a href="https://halum--page1.thrivecart.com/designrr-special-offer1/" class="btn-white">Build Your First eBook Free →</a>
+  <p class="cta-fine">No credit card required &nbsp;·&nbsp; Free plan available &nbsp;·&nbsp; Setup in under 5 minutes</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Design<span>rr</span></div>
+  <div class="footer-links">
+    <a href="#">Features</a><a href="#">Pricing</a><a href="#">Templates</a><a href="#">Blog</a><a href="#">Privacy Policy</a>
+  </div>
+  <div class="footer-copy">© 2025 Designrr. Affiliate disclosure: This page contains affiliate links. I may earn a commission at no extra cost to you.</div>
+</footer>
+
+<script>
+(function(){
+  var key='dsgn_cd_end', stored=localStorage.getItem(key), end;
+  if(stored){end=parseInt(stored,10);}else{end=Date.now()+(24*60*60*1000);localStorage.setItem(key,end);}
+  function pad(n){return n<10?'0'+n:n;}
+  function tick(){
+    var d=Math.max(0,end-Date.now());
+    document.getElementById('cd-hours').textContent=pad(Math.floor(d/3600000));
+    document.getElementById('cd-mins').textContent=pad(Math.floor((d%3600000)/60000));
+    document.getElementById('cd-secs').textContent=pad(Math.floor((d%60000)/1000));
+    if(d>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>
